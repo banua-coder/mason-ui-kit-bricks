@@ -1,0 +1,5 @@
+bricks:
+  ui_kit_components:
+    path: bricks/ui_kit_components
+  ui_kit_core:
+    path: bricks/ui_kit_core

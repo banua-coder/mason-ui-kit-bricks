@@ -1,0 +1,40 @@
+name: {{name.snakeCase()}}_ui_kit
+description: A UI Kit package for {{name.titleCase()}}.
+version: 0.0.1
+homepage: https://github.com/{{githubUsername}}/{{repositoryName}}.git
+  
+environment: 
+  sdk: ">=3.0.1 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  extended_image: ^8.0.2
+  flutter:
+    sdk: flutter
+  flutter_screenutil: ^5.8.4
+  flutter_spinkit: ^5.2.0
+  flutter_svg: ^2.0.7
+  flutter_switch: ^0.3.2
+  google_fonts: ^5.1.0
+  lottie: ^2.4.0
+  nil: ^1.1.1
+  shimmer: ^3.0.0
+  tap_debouncer: ^2.2.0
+
+dev_dependencies: 
+  dart_code_metrics: ^4.19.2
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  # assets:
+  #   - assets/logo/
+  #   - assets/images/
+
+flutter_gen:
+  output: lib/src/core/assets/gen/
+  integrations:
+    flutter_svg: true
+    lottie: true
