@@ -1,0 +1,38 @@
+{
+    "app_name": "{{name.titleCase()}}",
+    "failures": {
+        "unauthenticated": "Ups! Belum login nih. Sign in dulu biar bisa akses data seru ini.",
+        "unauthorized": "Waduh! Nggak boleh liat info ini deh. Kalo ada masalah, chat dukungan ya.",
+        "not_found": "Yah, data yang dicari ilang entah kemana. Cek inputnya lagi atau nyari lagi deh nanti.",
+        "client": "Hold up! Ada masalah sama gadget kamu. Cek sambungan internet dan coba lagi, ya.",
+        "server": "Sorry ya, ada sedikit masalah di sisi kita. Lagi diperbaiki kok! Coba lagi deh nanti.",
+        "local_database": "Sorry nih! Database kita lagi on-off. Lagi kita urusin, deh. Coba lagi nanti ya.",
+        "unprocessable_entity": "Maaf! Ada yang kurang oke sama data yang dikirim. Cek lagi dan coba lagi deh.",
+        "format": "Sorry, ada masalah sama format datanya. Pastiin sesuai format yang diminta ya, trus coba lagi.",
+        "cache": "Kita lagi ada masalah sama penyimpanan sementara. Refresh halaman dan coba lagi ya.",
+        "timeout": "Permintaannya terlalu lama nih. Cek koneksi internet kamu dan coba lagi deh.",
+        "socket": "Ada masalah sama jaringan nih. Coba lagi nanti ya.",
+        "upload": "Oops! Ada masalah waktu ngunggah berkas kamu. Coba lagi deh.",
+        "permission": "Maaf, kamu belum punya izin buat aksi ini.",
+        "too_many_attempt": "Oops! Terlalu banyak permintaan nih. Coba lagi dikit lagi aja, ya."
+    },
+    "form": {
+        "label": {},
+        "placeholder": {},
+        "validations": {}
+    },
+    "text": {},
+    "label": {
+        "buttons": {},
+        "menu": {},
+        "bottom_nav": {}
+    },
+    "dialog": {
+        "title": {},
+        "description": {}
+    },
+    "empty": {
+        "title": {},
+        "description": {}
+    }
+}

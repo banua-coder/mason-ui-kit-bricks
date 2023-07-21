@@ -1,0 +1,54 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # Options configure how source code is generated for every
+          # `@JsonSerializable`-annotated class in the package.
+          #
+          # The default value for each is listed.
+          any_map: false
+          checked: false
+          constructor: ""
+          create_factory: true
+          create_field_map: false
+          create_to_json: true
+          disallow_unrecognized_keys: false
+          explicit_to_json: false
+          field_rename: snake
+          generic_argument_factories: false
+          ignore_unannotated: false
+          include_if_null: true
+      slang_build_runner:
+        options:
+          base_locale: id
+          fallback_strategy: base_locale
+          input_directory: lib/core/i18n
+          input_file_pattern: .i18n.json
+          output_directory: lib/core/i18n
+          output_file_name: translations.g.dart
+          output_format: single_file
+          locale_handling: true
+          flutter_integration: true
+          namespaces: false
+          translate_var: translate
+          enum_name: AppLocale
+          translation_class_visibility: private
+          key_case: snake
+          key_map_case: camel
+          param_case: pascal
+          string_interpolation: double_braces
+          flat_map: false
+          translation_overrides: false
+          timestamp: true
+          maps:
+            - error.codes
+            - category
+            - iconNames
+          pluralization:
+            auto: cardinal
+            default_parameter: n
+            # cardinal:
+            #   - label.text.file
+            # ordinal:
+            # - someKey.place

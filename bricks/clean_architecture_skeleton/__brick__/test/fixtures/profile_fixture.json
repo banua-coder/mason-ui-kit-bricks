@@ -1,0 +1,22 @@
+{
+    "jsonapi": {
+        "version": "1.0"
+    },
+    "data": {
+        "type": "users",
+        "id": "82970f4c-13b7-3bd9-a7ce-a8553c73ba6b",
+        "attributes": {
+            "name": "Dr. Jose Berge II",
+            "avatar": null,
+            "gender": "Laki-Laki",
+            "face_data": null,
+            "date_of_birth": null,
+            "email": "rempel.jordi@example.org",
+            "phone_number": null,
+            "is_email_verified": true,
+            "is_phone_verified": false,
+            "suspended_until": null,
+            "updated_at": "2023-07-20T08:00:40.000000Z"
+        }
+    }
+}
