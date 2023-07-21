@@ -1,0 +1,38 @@
+{
+    "app_name": "{{name.titleCase()}}",
+    "failures": {
+        "unauthenticated": "Oops! You're not logged in. Please sign in to access this data.",
+        "unauthorized": "Uh-oh! You don't have permission to view this information. Please contact support if you believe this is a mistake.",
+        "not_found": "Oh dear! The data you're looking for couldn't be found. Double-check your input or try again later.",
+        "client": "Hold on! There's an issue with your device. Please check your connection and try again.",
+        "server": "Hold on! Our servers are currently undergoing maintenance. Please try again later.",
+        "local_database": "Apologies! Our database seems to be acting up. We're on it! Please try again later.",
+        "unprocessable_entity": "Oops! Something went wrong with the data you provided. Please check and try again.",
+        "format": "Sorry, there's an issue with the data format. Please ensure it matches the required format and try again.",
+        "cache": "We encountered a caching problem. Please refresh the page and try again.",
+        "timeout": "The request took too long to process. Please check your internet connection and try again.",
+        "socket": "We're facing some network issues. Please try again later.",
+        "upload": "Oops! There was an error while uploading your file. Please try again.",
+        "permission": "Sorry, you don't have the necessary permissions to perform this action.",
+        "too_many_attempt": "Oops! Slow down a bit. We received too many requests. Please try again after a while."
+    },
+    "form": {
+        "label": {},
+        "placeholder": {},
+        "validations": {}
+    },
+    "text": {},
+    "label": {
+        "buttons": {},
+        "menu": {},
+        "bottom_nav": {}
+    },
+    "dialog": {
+        "title": {},
+        "description": {}
+    },
+    "empty": {
+        "title": {},
+        "description": {}
+    }
+}

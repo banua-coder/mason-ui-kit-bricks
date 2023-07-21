@@ -1,0 +1,53 @@
+name: clean_architecture_skeleton
+description: A new brick created with the Mason CLI.
+
+# The following defines the brick repository url.
+# Uncomment and update the following line before publishing the brick.
+# repository: https://github.com/my_org/my_repo
+
+# The following defines the version and build number for your brick.
+# A version number is three numbers separated by dots, like 1.2.34
+# followed by an optional build number (separated by a +).
+version: 0.1.0+1
+
+# The following defines the environment for the current brick.
+# It includes the version of mason that the brick requires.
+environment:
+  mason: ">=0.1.0-dev.50 <0.1.0"
+
+# Variables specify dynamic values that your brick depends on.
+# Zero or more variables can be specified for a given brick.
+# Each variable has:
+#  * a type (string, number, boolean, enum, array, or list)
+#  * an optional short description
+#  * an optional default value
+#  * an optional list of default values (array only)
+#  * an optional prompt phrase used when asking for the variable
+#  * a list of values (enums only)
+#  * an optional separator (list only)
+vars:
+  organization:
+    type: string
+    description: Organization name
+    default: Banua Coder
+    prompt: What is your organization name?
+  name:
+    type: string
+    description: App name
+    default: App
+    prompt: What is your name?
+  prefix:
+    type: string
+    description: Prefix to be used in some of your file.
+    default: bc
+    prompt: What is the prefix of your app?
+  usingFirebase:
+    type: boolean
+    description: Check if app using firebase or not
+    default: false
+    prompt: Is your app using firebase?
+  usingLocation:
+    type: boolean
+    description: Check if app using location or not
+    default: true
+    prompt: Is your app using location?
