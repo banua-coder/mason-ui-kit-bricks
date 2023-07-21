@@ -23,7 +23,7 @@ class {{name.pascalCase()}}App extends StatelessWidget {
                 {{prefix.upperCase()}}ColorTheme.light,
               ],
             ),
-            darkTheme: SHTheme.main().copyWith(
+            darkTheme: {{prefix.upperCase()}}Theme.main().copyWith(
               extensions: <ThemeExtension<dynamic>>[
                 {{prefix.upperCase()}}ColorTheme.dark,
               ],

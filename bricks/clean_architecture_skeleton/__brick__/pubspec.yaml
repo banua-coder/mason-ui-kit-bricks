@@ -20,6 +20,11 @@ dependencies:
   envied: ^0.3.0+3
   equatable: ^2.0.5
   external_path: ^1.0.3
+  {{#usingFirebase}}
+  firebase_analytics: ^10.4.4
+  firebase_core: ^2.15.0
+  firebase_crashlytics: ^3.3.4
+  {{/usingFirebase}}
   flutter_bloc: ^8.1.3
   flutter_easyloading: ^3.0.5
   flutter_secure_storage: ^8.0.0

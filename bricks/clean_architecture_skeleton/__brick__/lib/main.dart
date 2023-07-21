@@ -67,7 +67,7 @@ void main() => runZonedGuarded(
       },
       (error, stack) {
          {{#usingFirebase}}
-        getIt<Crashlytics>().report(error, stack)  
+        getIt<Crashlytics>().report(error, stack);  
         {{/usingFirebase}}
         {{^usingFirebase}}
         getIt<Log>().console(error.toString(), type: LogType.fatal);
