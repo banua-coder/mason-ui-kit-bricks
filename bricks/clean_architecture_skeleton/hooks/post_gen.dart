@@ -51,6 +51,44 @@ void run(HookContext context) async {
     failCount++;
   }
 
+  var process8 = context.logger.progress('Check if .env is present!');
+  result = await Process.run(
+    'test',
+    [
+      '-e',
+      '.env',
+    ],
+  );
+
+  if (result.exitCode != 0) {
+    process8.fail(
+      '.env not present!',
+    );
+    var process9 = context.logger.progress('Copying .env.example to .env');
+    result = await Process.run(
+      'cp',
+      [
+        '.env.example',
+        '.env',
+      ],
+    );
+
+    if (result.exitCode != 0) {
+      process9.fail(
+        'Failed crete .env file. Make sure you have .env or .env.example in root directory before continuing the process!',
+      );
+      exit(1);
+    } else {
+      process9.complete(
+        '.env generated!',
+      );
+    }
+  } else {
+    process8.complete(
+      '.env file exists!',
+    );
+  }
+
   final progress5 = context.logger.progress('Run build runner');
   result = await Process.run('dart', ['run', 'build_runner', 'build', '-d']);
 
