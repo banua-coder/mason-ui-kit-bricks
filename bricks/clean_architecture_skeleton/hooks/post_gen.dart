@@ -77,7 +77,7 @@ void run(HookContext context) async {
       process9.fail(
         'Failed crete .env file. Make sure you have .env or .env.example in root directory before continuing the process!',
       );
-      exit(1);
+      failCount++;
     } else {
       process9.complete(
         '.env generated!',
