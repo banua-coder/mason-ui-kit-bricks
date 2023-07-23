@@ -41,5 +41,4 @@ void run(HookContext context) async {
       'Launcher icon exists!',
     );
   }
-
 }

@@ -4,4 +4,4 @@ bricks:
   ui_kit_core:
     path: bricks/ui_kit_core
   clean_architecture_skeleton:
-   path: bricks/clean_architecture_skeleton
+    path: bricks/clean_architecture_skeleton
