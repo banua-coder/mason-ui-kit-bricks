@@ -18,11 +18,10 @@ dependencies:
   google_fonts: ^5.1.0
   lottie: ^2.4.0
   nil: ^1.1.1
-  shimmer: ^3.0.0
+  skeletonizer: ^0.3.0
   tap_debouncer: ^2.2.0
 
 dev_dependencies: 
-  dart_code_metrics: ^4.19.2
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter

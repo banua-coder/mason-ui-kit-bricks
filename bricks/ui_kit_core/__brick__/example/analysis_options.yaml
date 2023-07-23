@@ -4,35 +4,9 @@ include: package:flutter_lints/flutter.yaml
 # https://dart.dev/guides/language/analysis-options
 
 analyzer:
-  plugins:
-    - dart_code_metrics
   exclude:
     - "build/**"
 
-dart_code_metrics:
-  metrics:
-    cyclomatic-complexity: 20
-    maximum-nesting-level: 5
-    number-of-parameters: 4
-    source-line-of-code: 50
-  metrics-exclude:
-    - test/**
-  rules:
-    - no-boolean-literal-compare
-    - no-empty-block
-    - prefer-using-list-view
-    - prefer-trailing-comma
-    - prefer-conditional-expressions
-    - no-equal-then-else
-    # - avoid-ignoring-return-values
-    # - avoid-non-null-assertion
-    - avoid-unnecessary-conditionals
-    - avoid-expanded-as-spacer
-    - avoid-returning-widgets:
-        ignored-names:
-          - testFunction
-        ignored-annotations:
-          - allowedAnnotation
 linter:
   rules:
     # Error
