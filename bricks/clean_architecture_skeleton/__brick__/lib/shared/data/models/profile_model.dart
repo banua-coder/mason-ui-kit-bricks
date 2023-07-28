@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../utils/serializers/bool_serializer.dart';
 import '../../domain/entities/profile.dart';
 
 part 'profile_model.freezed.dart';
@@ -13,8 +12,8 @@ class ProfileModel extends Profile with _$ProfileModel {
     required String id,
     required String name,
     String? avatar,
-    @BoolSerializer() required bool isEmailVerified,
-    @BoolSerializer() required bool isPhoneVerified,
+    required bool isEmailVerified,
+    required bool isPhoneVerified,
     DateTime? dateOfBirth,
     required String gender,
     String? phoneNumber,
