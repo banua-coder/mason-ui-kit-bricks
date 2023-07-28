@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain/entities/profile.dart';
+import '../../../core/constants/json_constant.dart'
 
 part 'profile_model.freezed.dart';
 part 'profile_model.g.dart';
@@ -22,6 +23,15 @@ class ProfileModel extends Profile with _$ProfileModel {
   }) = _ProfileModel;
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>
       _$ProfileModelFromJson(json);
+
+  factory ProfileModel.fromJsonApi(Map<String, dynamic> json) {
+    var id = json[JsonConstant.id];
+    var attributes = json[JsonConstant.attributes];
+    return _$ProfileModelFromJson({
+      'id': id,
+      ...attributes,
+    },);
+  }
 
   factory ProfileModel.fromEntity(Profile profile) => ProfileModel(
         id: profile.id,
