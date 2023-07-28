@@ -1,75 +1,103 @@
 import 'dart:io';
-import 'package:recase/recase.dart';
 import 'package:mason/mason.dart';
 
 void run(HookContext context) async {
-  var appName = ReCase(context.vars['name']);
-  var organization = ReCase(context.vars['organization']);
+  final logger = context.logger;
+  var appName = context.vars['name'] as String;
+  var organization = context.vars['organization'] as String;
   var failCount = 0;
 
-  var isPubGetFailed = false;
-
-  final flutterGetProgress = context.logger.progress('Installing packages');
-  var result = await Process.run(
-    'flutter',
-    [
-      'pub',
-      'upgrade',
-    ],
-  );
-
-  if (result.exitCode == 0) {
-    flutterGetProgress.complete('Flutter packages installed!');
-  } else {
-    flutterGetProgress.fail('Flutter packages not installed!');
-    failCount++;
-    isPubGetFailed = true;
-  }
-
-  final checkRenamePackageProgress =
-      context.logger.progress('Check for rename package');
-
-  result = await Process.run('dart', ['pub', 'global', 'list']);
-
-  if (result.stdout.toString().contains('rename')) {
-    checkRenamePackageProgress.complete('Rename package activated!');
-  } else {
-    checkRenamePackageProgress.fail('Rename package does not activated!');
-    final activateRenameProgress =
-        context.logger.progress('Activate rename package!');
-    result = await Process.run(
-      'dart',
-      ['pub', 'global', 'activate', 'rename'],
+  try {
+    final flutterGetProgress = logger.progress('Installing packages');
+    var result = await Process.run(
+      'flutter',
+      [
+        'pub',
+        'upgrade',
+      ],
     );
 
     if (result.exitCode == 0) {
-      activateRenameProgress.complete('Package rename activated!');
+      flutterGetProgress.complete('Flutter packages installed!');
     } else {
-      activateRenameProgress.fail('Fail to activate rename package!');
+      flutterGetProgress.fail('Flutter packages not installed!');
       failCount++;
     }
-  }
 
-  final changeAppNameProgress = context.logger.progress('Change app name');
-  result = await Process.run(
-    'rename',
-    [
-      '--appname=${appName.titleCase}',
-      '--target=ios,android',
-    ],
-  );
+    final checkRenamePackageProgress =
+        logger.progress('Check for rename package');
 
-  if (result.exitCode == 0) {
-    changeAppNameProgress.complete('App name updated!');
-  } else {
-    changeAppNameProgress.fail('App name not updated!');
-  }
+    result = await Process.run('dart', ['pub', 'global', 'list']);
 
-  if (isPubGetFailed) {
-    context.logger.warn('Skip change bundle id step!');
-  } else {
-    final changeBundleIdProgress =
-        context.logger.progress('Change app package name and bundle id');
+    if (result.stdout.toString().contains('rename')) {
+      checkRenamePackageProgress.complete('Rename package activated!');
+    } else {
+      checkRenamePackageProgress.fail('Rename package is not activated!');
+      final activateRenameProgress =
+          logger.progress('Activate rename package!');
+      result = await Process.run(
+        'dart',
+        ['pub', 'global', 'activate', 'rename'],
+      );
+
+      if (result.exitCode == 0) {
+        activateRenameProgress.complete('Package rename activated!');
+      } else {
+        activateRenameProgress.fail('Failed to activate rename package!');
+        failCount++;
+      }
+    }
+
+    final changeAppNameProgress = logger.progress('Change app name');
+    result = await Process.run(
+      'rename',
+      [
+        '--appname=${appName.titleCase}',
+        '--target=ios,android',
+      ],
+    );
+
+    if (result.exitCode == 0) {
+      changeAppNameProgress.complete('App name updated!');
+    } else {
+      changeAppNameProgress.fail('App name not updated!');
+    }
+
+    final checkEnvProgress = logger.progress('Check if .env is present!');
+    result = await Process.run(
+      'test',
+      [
+        '-e',
+        '.env',
+      ],
+    );
+
+    if (result.exitCode != 0) {
+      checkEnvProgress.fail('.env not present!');
+      final copyingEnvExampleProgress =
+          logger.progress('Copying .env.example to .env');
+      result = await Process.run(
+        'cp',
+        [
+          '.env.example',
+          '.env',
+        ],
+      );
+
+      if (result.exitCode != 0) {
+        copyingEnvExampleProgress.fail(
+          'Failed to create .env file. Make sure you have .env or .env.example in the root directory before continuing the process!',
+        );
+        failCount++;
+      } else {
+        copyingEnvExampleProgress.complete('.env generated!');
+      }
+    } else {
+      checkEnvProgress.complete('.env file exists!');
+    }
+
+    final changeAppPackageProgress =
+        logger.progress('Change app package name and bundle id');
     result = await Process.run('dart', [
       'run',
       'change_app_package_name:main',
@@ -77,75 +105,24 @@ void run(HookContext context) async {
     ]);
 
     if (result.exitCode == 0) {
-      changeBundleIdProgress.complete('Bundle id and package name updated!');
+      changeAppPackageProgress.complete('Bundle id and package name updated!');
     } else {
-      changeBundleIdProgress.fail('Bundle id and package name not updated!');
+      changeAppPackageProgress.fail('Bundle id and package name not updated!');
       failCount++;
     }
-  }
 
-  var checkEnvProgress = context.logger.progress('Check if .env is present!');
-  result = await Process.run(
-    'test',
-    [
-      '-e',
-      '.env',
-    ],
-  );
-
-  if (result.exitCode != 0) {
-    checkEnvProgress.fail(
-      '.env not present!',
-    );
-    var copyingEnvExampleProgress =
-        context.logger.progress('Copying .env.example to .env');
-    result = await Process.run(
-      'cp',
-      [
-        '.env.example',
-        '.env',
-      ],
-    );
-
-    if (result.exitCode != 0) {
-      copyingEnvExampleProgress.fail(
-        'Failed crete .env file. Make sure you have .env or .env.example in root directory before continuing the process!',
-      );
-      failCount++;
-    } else {
-      copyingEnvExampleProgress.complete(
-        '.env generated!',
-      );
-    }
-  } else {
-    checkEnvProgress.complete(
-      '.env file exists!',
-    );
-  }
-
-  if (isPubGetFailed) {
-    context.logger.warn('Skip build runner step!');
-  } else {
-    final runBuildRunnerProgress = context.logger.progress('Run build runner');
+    final runBuildRunnerProgress = logger.progress('Run build runner');
     result = await Process.run('dart', ['run', 'build_runner', 'build', '-d']);
 
     if (result.exitCode == 0) {
-      runBuildRunnerProgress.complete(
-        'Build runner executed successfully!',
-      );
+      runBuildRunnerProgress.complete('Build runner executed successfully!');
     } else {
-      runBuildRunnerProgress.fail(
-        'Build runner failed!',
-      );
+      runBuildRunnerProgress.fail('Build runner failed!');
       failCount++;
     }
-  }
 
-  if (isPubGetFailed) {
-    context.logger.warn('Skip launcher icons generator step!');
-  } else {
     final runLauncherIconsProgress =
-        context.logger.progress('Generating launcher icons!');
+        logger.progress('Generating launcher icons!');
     result = await Process.run(
       'dart',
       [
@@ -161,56 +138,56 @@ void run(HookContext context) async {
       runLauncherIconsProgress.fail('Launcher icons not generated!');
       failCount++;
     }
-  }
 
-  final fixSyntaxProgress =
-      context.logger.progress('Clearing all syntax violation');
-  result = await Process.run('dart', [
-    'fix',
-    '--apply',
-  ]);
+    final fixSyntaxProgress = logger.progress('Clearing all syntax violations');
+    result = await Process.run('dart', [
+      'fix',
+      '--apply',
+    ]);
 
-  if (result.exitCode == 0) {
-    fixSyntaxProgress.complete('All syntax violation has been fixed!');
-  } else {
-    fixSyntaxProgress.fail('All syntax violation can not be fixed!');
-    failCount++;
-  }
+    if (result.exitCode == 0) {
+      fixSyntaxProgress.complete('All syntax violations have been fixed!');
+    } else {
+      fixSyntaxProgress.fail('All syntax violations could not be fixed!');
+      failCount++;
+    }
 
-  result = await Process.run(
-    'test',
-    [
-      '-e',
-      'test/widget_test.dart',
-    ],
-  );
-
-  if (result.exitCode != 0) {
-    final removeUnusedFileProgress =
-        context.logger.progress('Remove unused file!');
+    final removeUnusedFileProgress = logger.progress('Remove unused file!');
     result = await Process.run(
-      'rm',
+      'test',
       [
+        '-e',
         'test/widget_test.dart',
       ],
     );
 
-    if (result.exitCode == 0) {
-      removeUnusedFileProgress.complete('All unused file has been removed!');
-    } else {
-      removeUnusedFileProgress.fail('All unused file has not been removed!');
+    if (result.exitCode != 0) {
+      result = await Process.run(
+        'rm',
+        [
+          'test/widget_test.dart',
+        ],
+      );
 
-      failCount++;
+      if (result.exitCode == 0) {
+        removeUnusedFileProgress
+            .complete('All unused files have been removed!');
+      } else {
+        removeUnusedFileProgress
+            .fail('All unused files have not been removed!');
+        failCount++;
+      }
     }
-  }
 
-  if (failCount > 0) {
-    context.logger.warn(
-      'Some of the task are not successfully executed. Please check your config and code before you can re-run the process!',
-    );
-  } else {
-    context.logger.success(
-      'Flutter project skeleton generated successfuly! Let`s built something awesome!',
-    );
+    if (failCount > 0) {
+      logger.warn(
+          'Some tasks were not executed successfully. Please check your config and code before you can re-run the process!');
+    } else {
+      logger.success(
+          'Flutter project skeleton generated successfully! Let\'s build something awesome!');
+    }
+  } catch (e) {
+    logger.alert('An error occurred: $e');
+    failCount++;
   }
 }

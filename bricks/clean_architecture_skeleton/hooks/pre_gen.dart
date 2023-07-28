@@ -1,28 +1,30 @@
 import 'dart:io';
 import 'package:mason/mason.dart';
-import 'package:recase/recase.dart';
 
 void run(HookContext context) async {
-  var name = ReCase(context.vars['name']);
-  var process = context.logger.progress('Check if assets directory is exist!');
+  final logger = context.logger;
+  var name = context.vars['name'] as String;
+
+  final assetsDirectoryProcess =
+      logger.progress('Check if assets directory exists!');
   var result = await Process.run(
     'ls',
     ['assets'],
   );
 
   if (result.exitCode != 0) {
-    process.fail(
-      'You must create "assets/logo" directory and all it`s assets first!',
+    assetsDirectoryProcess.fail(
+      'You must create the "assets/logo" directory and add all its assets first!',
     );
     exit(1);
   } else {
-    process.complete(
-      'Assets directory exist!',
+    assetsDirectoryProcess.complete(
+      'Assets directory exists!',
     );
   }
 
-  var process2 =
-      context.logger.progress('Check if logo for launcher icon is exist!');
+  final launcherIconProcess =
+      logger.progress('Check if logo for the launcher icon exists!');
   result = await Process.run(
     'test',
     [
@@ -32,12 +34,12 @@ void run(HookContext context) async {
   );
 
   if (result.exitCode != 0) {
-    process2.fail(
-      'You must create launcher icon with name "${name.snakeCase}_icons.png" in "assets/logo" directory before continuing the process!',
+    launcherIconProcess.fail(
+      'You must create a launcher icon with the name "${name.snakeCase}_icons.png" in the "assets/logo" directory before continuing the process!',
     );
     exit(1);
   } else {
-    process2.complete(
+    launcherIconProcess.complete(
       'Launcher icon exists!',
     );
   }
