@@ -17,7 +17,7 @@ class {{name.pascalCase()}}App extends StatelessWidget {
   @override
   Widget build(BuildContext context) => {{prefix.upperCase()}}ComponentInit(
       builder: (context) => MaterialApp.router(
-            title: 'Siap',
+            title: '{{name.titleCase()}}',
             theme: {{prefix.upperCase()}}Theme.main().copyWith(
               extensions: <ThemeExtension<dynamic>>[
                 {{prefix.upperCase()}}ColorTheme.light,
