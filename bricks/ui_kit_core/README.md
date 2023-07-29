@@ -46,16 +46,16 @@ In the tutorial video, I provide step-by-step instructions and demonstrations on
 
 Before using this brick, you need to create a JSON file containing all the required input variables for generating your component. The following table provides the variables needed:
 
-| Name | Type | Description | Required |
-|---|---|---|---|
-| name | String | The name of the app to generate the UI Package for will be used as the prefix in the UI Kit. For example, `facebook_ui_kit.dart`. | yes |
-| fontFamily | String | Font family that will be used in your UI Kit. This must be a font family that available on Google Fonts. | Yes |
-| prefix | String | Prefix to be used in core files. Ex. `fb_colors.dart`, `class FBColors`, etc. | yes |
-| githubUsername | String | This username will be added to `pubspec.yaml` homepage property. Ex. `homepage: https://github.com/username` | yes |
-| repositoryName | String  | This repository name will be added to `pubspec.yaml` homepage property. Ex. `homepage: https://github.com/username/repository-name.git` | yes |
-| colors | List | List of colors from your figma design system. | yes |
-| typography | List | List of all text style from your figma design system. | yes |
-| textTheme | List | List of overridden `textTheme` styles with your text style. | Yes |
+| Name             | Type    | Description                                                                                     | Required |
+|------------------|---------|-------------------------------------------------------------------------------------------------|----------|
+| name             | String  | The name of the app to generate the UI Package for. It will be used as the prefix in the UI Kit. For example, `facebook_ui_kit.dart`. | Yes      |
+| fontFamily      | String  | The font family to be used in your UI Kit. This must be a font family available on Google Fonts. | Yes      |
+| prefix           | String  | The prefix to be used in core files. For example, `fb_colors.dart`, `class FBColors`, etc. | Yes      |
+| githubUsername   | String  | The GitHub account username where you have hosted the code. It will be added to the `pubspec.yaml` homepage property. | Yes      |
+| repositoryName   | String  | The name of the GitHub repository where your code is hosted. It will be added to the `pubspec.yaml` homepage property. | Yes      |
+| colors           | List    | A list of colors from your figma design system.                                               | Yes      |
+| typography       | List    | A list of all text styles from your figma design system.                                      | Yes      |
+| textTheme        | List    | A list of overridden `textTheme` styles with your text style.                                 | Yes      |
 
 ### IMPORTANT NOTES
 

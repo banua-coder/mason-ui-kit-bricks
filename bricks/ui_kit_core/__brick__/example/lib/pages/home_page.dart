@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:{{name.snakeCase()}}_ui_kit/{{name.snakeCase()}}_ui_kit.dart';
+import 'package:{{packageName}}/{{packageName}}.dart';
 
 import '/pages/color_page.dart';
 import '/pages/typography_page.dart';

@@ -48,15 +48,14 @@ In the tutorial video, I provide step-by-step instructions and demonstrations on
 
 Before using this brick, you need to create a JSON file containing all the required input variables for generating your component. The following table provides the variables needed:
 
-| Variable   | Type    | Description                                                                   | Required |
-|------------|---------|-------------------------------------------------------------------------------|----------|
-| appName    | String  | This variable is needed to check for the UI Kit package name.                 | Yes      |
-| name       | String  | The name of the component to be generated.                                     | Yes      |
-| isStateful | Boolean | Determines the type of widget used by this component.                          | Yes      |
-| hasEnum    | Boolean | Specifies if this class has an enum class or not (e.g., ButtonVariant, ButtonSize). | Yes      |
-| prefix    | String  | The prefix of the component name.                                             | Yes      |
-| properties | List    | A list of component properties.                                               | No       |
-| enums      | List    | A list of enums to be generated in JSON format with name and values.           | Yes (if hasEnum is true) |
+| Variable   | Type    | Description                                                                   | Required                        |
+|------------|---------|-------------------------------------------------------------------------------|---------------------------------|
+| name       | String  | The name of the component to be generated.                                     | Yes                             |
+| isStateful | Boolean | Determines the type of widget used by this component.                          | Yes                             |
+| hasEnum    | Boolean | Specifies if this class has an enum class or not (e.g., ButtonVariant, ButtonSize). | Yes                             |
+| prefix     | String  | The prefix of the component name.                                             | Yes                             |
+| properties | List    | A list of component properties.                                               | No                              |
+| enums      | List    | A list of enums to be generated in JSON format with name and values.           | Yes (if hasEnum is true)        |
 
 For the properties variable, it should be an array containing property items with the following structure:
 
@@ -98,7 +97,6 @@ For example, if you have the following `component-config.json` in your project:
 
 ```json
 {
-    "appName": "Sikerja",
     "name": "button",
     "isStateful": false,
     "hasEnum": true,

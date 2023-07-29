@@ -4,9 +4,9 @@ class {{prefix.upperCase()}}Colors {
   const {{prefix.upperCase()}}Colors._();
   {{#colors}}{{#isMaterialColor}} 
   static const MaterialColor {{name.camelCase()}} = MaterialColor(
-    0xFF{{defaultColor}},
+    0xFF{{defaultColor.upperCase()}},
     {
-      {{#value}}{{level}}: Color(0xFF{{value}}),
+      {{#value}}{{level}}: Color(0xFF{{value.upperCase()}}),
       {{/value}}
     },
   );{{/isMaterialColor}}

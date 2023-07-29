@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:{{name.snakeCase()}}_ui_kit/{{name.snakeCase()}}_ui_kit.dart';
+import 'package:{{packageName}}/{{packageName}}.dart';
 
 class ColorPage extends StatelessWidget {
   const ColorPage({super.key});

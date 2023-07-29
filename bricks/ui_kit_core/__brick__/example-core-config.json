@@ -1,0 +1,98 @@
+{
+    "name": "{{name.titleCase()}}",
+    "prefix": "{{prefix.lowerCase()}}",
+    "fontFamily": "{{fontFamily.lowerCase()}}",
+    "githubUsername": "{{githubUsername.paramCase()}}",
+    "repositoryName": "{{repositoryName.paramCase()}}",
+    "colors": [
+        {
+            "name": "primary",
+            "isMaterialColor": false,
+            "value": "FFFFFF"
+        },
+        {
+            "name": "neutral",
+            "isMaterialColor": true,
+            "defaultColor": "EAEAEA",
+            "value": [
+                {
+                    "level": 10,
+                    "value": "D9D9D9"
+                }
+            ]
+        }
+    ],
+    "typography": [
+        {
+            "name": "title",
+            "fontSize": 42,
+            "parameters": [
+                {
+                    "type": "Color?",
+                    "name": "color"
+                },
+                {
+                    "type": "FontWeight",
+                    "name": "fontWeight",
+                    "default": "FontWeight.w700"
+                },
+                {
+                    "type": "TextDecoration?",
+                    "name": "decoration"
+                }
+            ]
+        }
+    ],
+    "textTheme": [
+        {
+            "name": "Display Large",
+            "style": "title"
+        },
+        {
+            "name": "Display Medium",
+            "style": "title",
+            "parameters": [
+                {
+                    "type": "FontWeight",
+                    "name": "fontWeight",
+                    "value": "FontWeight.w600"
+                }
+            ]
+        },
+        {
+            "name": "Display Small",
+            "style": "title",
+            "parameters": [
+                {
+                    "type": "FontWeight",
+                    "name": "fontWeight",
+                    "value": "FontWeight.w400"
+                }
+            ]
+        },
+        {
+            "name": "Title Large",
+            "style": "heading1"
+        },
+        {
+            "name": "Title Medium",
+            "style": "heading2"
+        },
+        {
+            "name": "Title Small",
+            "style": "heading3"
+        },
+        {
+            "name": "Body Large",
+            "style": "body2"
+        },
+        {
+            "name": "Body Medium",
+            "style": "body1"
+        },
+        {
+            "name": "Body Small",
+            "style": "caption"
+        }
+    ]
+}

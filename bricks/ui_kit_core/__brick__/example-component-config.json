@@ -1,0 +1,52 @@
+{
+    "name": "button",
+    "isStateful": false,
+    "hasEnum": true,
+    "prefix": "{{prefix.lowerCase()}}",
+    "properties": [
+        {
+            "name": "label",
+            "type": "String",
+            "isRequired": true
+        },
+        {
+            "name": "onpressed",
+            "type": "Future Function()",
+            "isRequired": true
+        },
+        {
+            "name": "size",
+            "type": "SKButtonSize",
+            "default": "SKButtonSize.small"
+        },
+        {
+            "name": "variant",
+            "type": "SKButtonVariant",
+            "default": "SKButtonVariant.primary"
+        },
+        {
+            "name": "enabled",
+            "type": "bool",
+            "default": true
+        }
+    ],
+    "enums": [
+        {
+            "name": "button variant",
+            "values": [
+                "primary",
+                "outlined",
+                "ghost"
+            ]
+        },
+        {
+            "name": "button size",
+            "values": [
+                "large",
+                "medium",
+                "regular",
+                "small"
+            ]
+        }
+    ]
+}

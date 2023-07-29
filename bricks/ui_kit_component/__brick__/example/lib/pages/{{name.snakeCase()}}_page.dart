@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:{{packageName}}/{{packageName}}.dart';
 
 class {{name.pascalCase()}}Page extends StatelessWidget {
   const {{name.pascalCase()}}Page({super.key});

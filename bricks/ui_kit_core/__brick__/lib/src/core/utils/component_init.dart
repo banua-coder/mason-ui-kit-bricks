@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-import '../../../{{name.snakeCase()}}_ui_kit.dart';
+import '../../../{{packageName}}.dart';
 
 class {{prefix.upperCase()}}ComponentInit extends StatelessWidget {
   const {{prefix.upperCase()}}ComponentInit({super.key, required this.builder});

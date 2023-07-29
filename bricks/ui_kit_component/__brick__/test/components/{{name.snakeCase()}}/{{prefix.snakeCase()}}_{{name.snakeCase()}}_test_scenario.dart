@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:{{appName.snakeCase()}}_ui_kit/{{appName.snakeCase()}}_ui_kit.dart';
+import 'package:{{packageName}}/{{packageName}}.dart';
 
 import '../../util/{{prefix.snakeCase()}}_component_init_test.dart';
 import '../../util/widget_test_scenario_model.dart';

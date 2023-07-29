@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../{{appName.snakeCase()}}_ui_kit.dart';
+import '../../../{{packageName}}.dart';
 
 {{#isStateful}}  
 class {{prefix.upperCase()}}{{name.pascalCase()}} extends StatefulWidget {

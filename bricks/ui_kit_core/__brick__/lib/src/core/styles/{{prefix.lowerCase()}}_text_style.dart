@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
-import '../../../{{name.snakeCase()}}_ui_kit.dart';
+import '../../../{{packageName}}.dart';
 
 class {{prefix.upperCase()}}TextStyle {
   const {{prefix.upperCase()}}TextStyle._();

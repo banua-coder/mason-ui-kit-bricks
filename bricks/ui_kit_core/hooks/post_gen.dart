@@ -1,14 +1,13 @@
 import 'dart:io';
 
 import 'package:mason/mason.dart';
-import 'package:recase/recase.dart';
 
 void run(HookContext context) async {
-  var appName = ReCase(context.vars['name']);
+  var packageName = context.vars['packageName'] as String;
   var failCount = 0;
 
   final pubGetProgress =
-      context.logger.progress('Installing & updating packages!');
+      context.logger.progress('Installing & updating packages...');
 
   var result = await Process.run(
     'flutter',
@@ -21,7 +20,7 @@ void run(HookContext context) async {
   if (result.exitCode == 0) {
     pubGetProgress.complete('Flutter packages installed/updated!');
   } else {
-    pubGetProgress.fail('Flutter packages not installed/updated!');
+    pubGetProgress.fail('Failed to install/update Flutter packages!');
     failCount++;
   }
 
@@ -33,7 +32,7 @@ void run(HookContext context) async {
   Directory.current = newPath;
 
   var flutterCreateProgress = context.logger.progress(
-    'Fixing example project!',
+    'Fixing the example project...',
   );
 
   result = await Process.run('flutter', ['create', '.']);
@@ -42,9 +41,9 @@ void run(HookContext context) async {
 
   if (result.exitCode == 0) {
     isProjectFixed = true;
-    flutterCreateProgress.complete('Successfully fixing example project!');
+    flutterCreateProgress.complete('Successfully fixed the example project!');
   } else {
-    flutterCreateProgress.fail('Failed to fix example project!');
+    flutterCreateProgress.fail('Failed to fix the example project!');
     failCount++;
   }
 
@@ -56,59 +55,59 @@ void run(HookContext context) async {
   );
 
   final removeUnusedFileProgress =
-      context.logger.progress('Remove unused file!');
+      context.logger.progress('Removing unused files...');
 
   if (result.exitCode == 0) {
-    removeUnusedFileProgress.complete('All unused file has been removed!');
+    removeUnusedFileProgress.complete('All unused files have been removed!');
   } else {
-    removeUnusedFileProgress.fail('All unused file has not been removed!');
-
+    removeUnusedFileProgress.fail('Failed to remove all unused files!');
     failCount++;
   }
 
   if (isProjectFixed) {
     var installedExamplePackage = context.logger.progress(
-      'Installed package for example project!',
+      'Installing packages for the example project...',
     );
 
     result = await Process.run('flutter', ['pub', 'upgrade']);
 
     if (result.exitCode == 0) {
       installedExamplePackage
-          .complete('Successfully update package of example project!');
+          .complete('Successfully updated packages for the example project!');
     } else {
       installedExamplePackage.complete(
-        'Failed to update package of example project!',
+        'Failed to update packages for the example project!',
       );
       failCount++;
     }
 
     final changeBundleIdProgress =
-        context.logger.progress('Change app package name and bundle id');
+        context.logger.progress('Changing app package name and bundle id...');
     result = await Process.run('dart', [
       'run',
       'change_app_package_name:main',
-      'com.${appName.snakeCase}_ui_kit.example.app',
+      'com.$packageName.example.app',
     ]);
 
     if (result.exitCode == 0) {
       changeBundleIdProgress.complete('Bundle id and package name updated!');
     } else {
-      changeBundleIdProgress.fail('Bundle id and package name not updated!');
+      changeBundleIdProgress
+          .fail('Failed to update bundle id and package name!');
       failCount++;
     }
 
     final checkRenamePackageProgress =
-        context.logger.progress('Check for rename package');
+        context.logger.progress('Checking for rename package...');
 
     result = await Process.run('dart', ['pub', 'global', 'list']);
 
     if (result.stdout.toString().contains('rename')) {
-      checkRenamePackageProgress.complete('Rename package activated!');
+      checkRenamePackageProgress.complete('Rename package is active!');
     } else {
-      checkRenamePackageProgress.fail('Rename package does not activated!');
+      checkRenamePackageProgress.fail('Rename package is not activated!');
       final activateRenameProgress =
-          context.logger.progress('Activate rename package!');
+          context.logger.progress('Activating rename package...');
       result = await Process.run(
         'dart',
         ['pub', 'global', 'activate', 'rename'],
@@ -117,16 +116,17 @@ void run(HookContext context) async {
       if (result.exitCode == 0) {
         activateRenameProgress.complete('Package rename activated!');
       } else {
-        activateRenameProgress.fail('Fail to activate rename package!');
+        activateRenameProgress.fail('Failed to activate rename package!');
         failCount++;
       }
     }
 
-    final changeAppNameProgress = context.logger.progress('Change app name');
+    final changeAppNameProgress =
+        context.logger.progress('Changing app name...');
     result = await Process.run(
       'rename',
       [
-        '--appname=${appName.titleCase} UI Kit',
+        '--appname=${packageName.titleCase}',
         '--target=ios,android',
       ],
     );
@@ -135,20 +135,77 @@ void run(HookContext context) async {
       changeAppNameProgress.complete('App name updated!');
     } else {
       changeAppNameProgress.fail('App name not updated!');
+      failCount++;
     }
   } else {
     context.logger.warn(
-      'Some step are skipped because example project not fixed!',
+      'Some steps are skipped because the example project is not fixed!',
     );
+  }
+
+  currentDirectory = Directory.current.path;
+  desiredDirectory =
+      currentDirectory.replaceAll('${Platform.pathSeparator}example', '');
+  newPath = desiredDirectory;
+
+  Directory.current = newPath;
+
+  // Fix code violations
+  final fixSyntaxProgress =
+      context.logger.progress('Clearing all syntax violations');
+  result = await Process.run('dart', [
+    'fix',
+    '--apply',
+  ]);
+
+  if (result.exitCode == 0) {
+    fixSyntaxProgress.complete('All syntax violations have been fixed!');
+  } else {
+    fixSyntaxProgress.fail('All syntax violations could not be fixed!');
+    failCount++;
+  }
+
+  // Rename example config files
+  final renameExampleConfigProgress =
+      context.logger.progress('Renaming example config files...');
+  try {
+    final exampleCoreConfigFile = File('example-core-config.json');
+    final exampleComponentConfigFile = File('example-component-config.json');
+    final newCoreConfigFile = File('core-config.json');
+    final newComponentConfigFile = File('component-config.json');
+
+    if (await newComponentConfigFile.exists()) {
+      await exampleComponentConfigFile.delete();
+    } else {
+      await exampleComponentConfigFile.rename(newComponentConfigFile.path);
+    }
+
+    if (await newCoreConfigFile.exists()) {
+      await exampleCoreConfigFile.delete();
+    } else {
+      await exampleCoreConfigFile.rename(newCoreConfigFile.path);
+    }
+
+    renameExampleConfigProgress
+        .complete('Example config files renamed successfully!');
+  } catch (e) {
+    renameExampleConfigProgress
+        .fail('Error occurred while renaming example config files');
+    failCount++;
   }
 
   if (failCount == 0) {
     context.logger.success(
-      'Successfuly generated core of your UI Kit package! Let`s built some beautiful components!',
+      'Successfully generated the core of your UI Kit package! Let\'s build some beautiful components!',
     );
+    context.logger.info(
+        'You can use "component-config.json" to customize the component according to your needs.');
+    context.logger.info(
+        'To generate the component using the UI Kit component brick, run this command:');
+    context.logger.info('mason make ui_kit_component -c component-config.json');
   } else {
     context.logger.warn(
-      'Some step are skipped because example project does not exist!',
+      'Some steps encountered errors or were skipped. Please check your config and code before proceeding!',
     );
   }
 }

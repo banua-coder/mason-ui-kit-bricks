@@ -1,4 +1,4 @@
-library {{name.snakeCase()}}_ui_kit;
+library {{packageName}};
 
 // 3rd party packages
 export 'package:flutter_screenutil/flutter_screenutil.dart';

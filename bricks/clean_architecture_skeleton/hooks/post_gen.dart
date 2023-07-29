@@ -20,21 +20,21 @@ void run(HookContext context) async {
     if (result.exitCode == 0) {
       flutterGetProgress.complete('Flutter packages installed!');
     } else {
-      flutterGetProgress.fail('Flutter packages not installed!');
+      flutterGetProgress.fail('Failed to install Flutter packages!');
       failCount++;
     }
 
     final checkRenamePackageProgress =
-        logger.progress('Check for rename package');
+        logger.progress('Checking for rename package');
 
     result = await Process.run('dart', ['pub', 'global', 'list']);
 
     if (result.stdout.toString().contains('rename')) {
-      checkRenamePackageProgress.complete('Rename package activated!');
+      checkRenamePackageProgress.complete('Rename package is activated!');
     } else {
       checkRenamePackageProgress.fail('Rename package is not activated!');
       final activateRenameProgress =
-          logger.progress('Activate rename package!');
+          logger.progress('Activating rename package...');
       result = await Process.run(
         'dart',
         ['pub', 'global', 'activate', 'rename'],
@@ -48,7 +48,7 @@ void run(HookContext context) async {
       }
     }
 
-    final changeAppNameProgress = logger.progress('Change app name');
+    final changeAppNameProgress = logger.progress('Changing app name...');
     result = await Process.run(
       'rename',
       [
@@ -61,9 +61,10 @@ void run(HookContext context) async {
       changeAppNameProgress.complete('App name updated!');
     } else {
       changeAppNameProgress.fail('App name not updated!');
+      failCount++;
     }
 
-    final checkEnvProgress = logger.progress('Check if .env is present!');
+    final checkEnvProgress = logger.progress('Checking if .env is present...');
     result = await Process.run(
       'test',
       [
@@ -97,7 +98,7 @@ void run(HookContext context) async {
     }
 
     final changeAppPackageProgress =
-        logger.progress('Change app package name and bundle id');
+        logger.progress('Changing app package name and bundle id...');
     result = await Process.run('dart', [
       'run',
       'change_app_package_name:main',
@@ -111,7 +112,7 @@ void run(HookContext context) async {
       failCount++;
     }
 
-    final runBuildRunnerProgress = logger.progress('Run build runner');
+    final runBuildRunnerProgress = logger.progress('Running build runner...');
     result = await Process.run('dart', ['run', 'build_runner', 'build', '-d']);
 
     if (result.exitCode == 0) {
@@ -122,7 +123,7 @@ void run(HookContext context) async {
     }
 
     final runLauncherIconsProgress =
-        logger.progress('Generating launcher icons!');
+        logger.progress('Generating launcher icons...');
     result = await Process.run(
       'dart',
       [
@@ -139,7 +140,8 @@ void run(HookContext context) async {
       failCount++;
     }
 
-    final fixSyntaxProgress = logger.progress('Clearing all syntax violations');
+    final fixSyntaxProgress =
+        logger.progress('Clearing all syntax violations...');
     result = await Process.run('dart', [
       'fix',
       '--apply',
@@ -152,7 +154,8 @@ void run(HookContext context) async {
       failCount++;
     }
 
-    final removeUnusedFileProgress = logger.progress('Remove unused file!');
+    final removeUnusedFileProgress =
+        logger.progress('Removing unused files...');
     result = await Process.run(
       'test',
       [
@@ -161,22 +164,11 @@ void run(HookContext context) async {
       ],
     );
 
-    if (result.exitCode != 0) {
-      result = await Process.run(
-        'rm',
-        [
-          'test/widget_test.dart',
-        ],
-      );
-
-      if (result.exitCode == 0) {
-        removeUnusedFileProgress
-            .complete('All unused files have been removed!');
-      } else {
-        removeUnusedFileProgress
-            .fail('All unused files have not been removed!');
-        failCount++;
-      }
+    if (result.exitCode == 0) {
+      removeUnusedFileProgress.complete('All unused files have been removed!');
+    } else {
+      removeUnusedFileProgress.fail('All unused files have not been removed!');
+      failCount++;
     }
 
     if (failCount > 0) {

@@ -3,6 +3,8 @@ import 'package:mocktail/mocktail.dart';
 import 'package:{{name.snakeCase()}}/core/network/api_endpoint.dart';
 import 'package:{{name.snakeCase()}}/core/network/http/modules/{{name.snakeCase()}}_http_module.dart';
 import 'package:{{name.snakeCase()}}/shared/data/data_sources/profile_remote_data_source.dart';
+import 'package:{{name.snakeCase()}}/shared/data/dtos/profile_dto.dart';
+import 'package:{{name.snakeCase()}}/shared/data/mapper/profile_mapper.dart';
 import 'package:{{name.snakeCase()}}/shared/data/models/profile_model.dart';
 
 import '../../../../fixtures/fixtures.dart';
@@ -25,8 +27,11 @@ void main() {
   group(
     'ProfileRemoteDataSource',
     () {
-      var profile =
-          ProfileModel.fromJson(jsonFromFixture('profile_fixture.json'));
+      ProfileModel profile = ProfileMapper.fromDto(
+        ProfileDto.fromJson(
+          jsonFromFixture('profile_fixture.json'),
+        ),
+      );
       group(
         'getProfile',
         () {

@@ -1,4 +1,4 @@
-name: {{name.snakeCase()}}_example
+name: {{packageName}}_example
 description: An example app to showcasing {{name.titleCase()}} UI Kit.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
@@ -11,7 +11,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  {{name.snakeCase()}}_ui_kit:
+  {{packageName}}:
     path: ../
 
 dev_dependencies:

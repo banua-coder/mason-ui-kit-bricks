@@ -8,7 +8,7 @@ repository: https://github.com/banua-coder/mason-ui-kit-bricks.git
 # The following defines the version and build number for your brick.
 # A version number is three numbers separated by dots, like 1.2.34
 # followed by an optional build number (separated by a +).
-version: 0.2.0+2
+version: 0.3.0+3
 
 # The following defines the environment for the current brick.
 # It includes the version of mason that the brick requires.
@@ -28,26 +28,26 @@ environment:
 vars:
   name:
     type: string
-    description: Your ui kit name
+    description: The name of your UI Kit.
     default: App
-    prompt: What is your UI Kit name?
+    prompt: "Please enter the name for your UI Kit:"
   prefix:
     type: string
-    description: Your prefix to use in the component name.
+    description: The prefix to use for component names.
     default: App
-    prompt: What is the prefix of the file name or component you want to use?
+    prompt: "Please enter the prefix you want to use for file names or components:"
   fontFamily:
     type: string
-    description: Font family of your UI Kit.
+    description: The font family to be used in your UI Kit.
     default: inter
-    prompt: What is the font family to use in your UI Kit? (Make sure it available in Google Fonts)
+    prompt: "Please enter the font family to use in your UI Kit (make sure it's available in Google Fonts):"
   githubUsername:
     type: string
-    description: Username of the GitHub account where you hosted the code.
+    description: Your GitHub account username where you have hosted the code.
     default: username
-    prompt: What is the username of your GitHub account where you hosted the code?
+    prompt: "Please enter your GitHub account username where the code is hosted:"
   repositoryName:
     type: string
-    description: Name of the GitHub repository in which your code hosted.
+    description: The name of the GitHub repository where your code is hosted.
     default: app-ui-kit
-    prompt: What is the name of the GitHub repository in which your code hosted?
+    prompt: "Please enter the name of the GitHub repository where your code is hosted:"

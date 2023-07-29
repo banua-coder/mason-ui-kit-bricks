@@ -1,4 +1,4 @@
-name: ui_kit_core_hooks
+name: ui_kit_component_hooks
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

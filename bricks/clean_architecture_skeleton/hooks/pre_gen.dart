@@ -6,7 +6,7 @@ void run(HookContext context) async {
   var name = context.vars['name'] as String;
 
   final assetsDirectoryProcess =
-      logger.progress('Check if assets directory exists!');
+      logger.progress('Checking if the assets directory exists...');
   var result = await Process.run(
     'ls',
     ['assets'],
@@ -24,7 +24,7 @@ void run(HookContext context) async {
   }
 
   final launcherIconProcess =
-      logger.progress('Check if logo for the launcher icon exists!');
+      logger.progress('Checking if the logo for the launcher icon exists...');
   result = await Process.run(
     'test',
     [
