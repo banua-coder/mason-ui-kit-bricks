@@ -14,7 +14,7 @@ class {{prefix.upperCase()}}TextStyle {
     TextDecoration? decoration,
     Color? color,
     double? height,
-  }) => GoogleFonts.{{fontFamily.lowerCase()}}(
+  }) => GoogleFonts.{{fontFamily.camelCase()}}(
      fontSize: fontSize * 1.sp,
         fontWeight: fontWeight,
         letterSpacing: letterSpacing * 1.sp,
@@ -27,10 +27,26 @@ class {{prefix.upperCase()}}TextStyle {
 
   //TODO: Define your text style variant and your main text theme
 
+  {{#useCustomTextTheme}}
   static TextTheme mainTextTheme = TextTheme(
-    {{#textTheme}}{{name.camelCase()}}: {{prefix.upperCase()}}TextStyle.{{style.camelCase()}}(),
+    {{#textTheme}}{{name.camelCase()}}: {{prefix.upperCase()}}TextStyle.{{style.camelCase()}}(
+      {{#parameters}}{{name.camelCase()}}: {{value}},{{/parameters}}
+    ),
     {{/textTheme}}
   );
+  static TextTheme darkTextTheme = TextTheme(
+    {{#textTheme}}{{name.camelCase()}}: {{prefix.upperCase()}}TextStyle.{{style.camelCase()}}(
+      {{#parameters}}{{name.camelCase()}}: {{value}},{{/parameters}}
+    ),
+    {{/textTheme}}
+  );
+  {{/useCustomTextTheme}}
+  {{^useCustomTextTheme}}
+  static TextTheme mainTextTheme = GoogleFonts.{{fontFamily.camelCase()}}TextTheme();
+  static TextTheme darkTextTheme = GoogleFonts.{{fontFamily.camelCase()}}TextTheme(
+    ThemeData.dark().textTheme,
+  );
+  {{/useCustomTextTheme}}
 
   {{#typography}}
   static TextStyle {{name.camelCase()}}({

@@ -201,6 +201,132 @@ void run(HookContext context) async {
     }
   }
 
+  var useCustomTextTheme = !context.vars.containsKey('textTheme');
+
+  if (useCustomTextTheme) {
+    useCustomTextTheme = logger.confirm(
+      'Do you want to use custom text theme for this component?',
+      defaultValue: false,
+    );
+
+    if (useCustomTextTheme) {
+      List<Map<String, dynamic>> textTheme = [];
+      List<String> availableStyles = [
+        'Display Large',
+        'Display Medium',
+        'Display Small',
+        'Headline Large',
+        'Headline Medium',
+        'Headline Small',
+        'Title Large',
+        'Title Medium',
+        'Title Small',
+        'Label Large',
+        'Label Medium',
+        'Label Small',
+        'Body Large',
+        'Body Medium',
+        'Body Small'
+      ];
+
+      for (var style in availableStyles) {
+        var useCustomStyle = logger.confirm(
+          'Do you want to customize the text style for "$style"?',
+          defaultValue: false,
+        );
+
+        if (useCustomStyle) {
+          var selectedTextStyle = logger.chooseOne(
+            'Select the corresponding text style for "$style" from the available typography variable:',
+            choices: (context.vars['typography'] as List<dynamic>)
+                .where((element) => textTheme.every((Map<String, dynamic> el) =>
+                    el['style'] != element['name']))
+                .map((e) => e['name'])
+                .toList(),
+            display: (choice) => choice.toString(),
+          );
+
+          List<Map<String, dynamic>> selectedParameters = [];
+          List<Map<String, String>> availableParams = [
+            {
+              'type': 'FontWeight?',
+              'name': 'fontWeight',
+              'example': 'FontWeight.w600',
+            },
+            {
+              'type': 'TextDecoration?',
+              'name': 'decoration',
+              'example': 'TextDecoration.underline'
+            },
+            {
+              'type': 'Color?',
+              'name': 'color',
+              'example':
+                  '${(context.vars['prefix'] as String).upperCase}Colors.primary'
+            }
+          ];
+
+          // Add code to prompt user for customization of selectedTextStyle parameters
+          // For example:
+          for (var param in availableParams) {
+            var isCustomizable = logger.confirm(
+              'Do you want to customize the ${param['name']} for "$style"?: ',
+              defaultValue: true,
+            );
+
+            if (!isCustomizable) {
+              continue;
+            }
+
+            var value = logger.prompt(
+              'Enter the ${param['name']} value for "$style" (e.g., ${param['example']}):',
+              defaultValue: 'FontWeight.w600',
+            );
+
+            selectedParameters.add({
+              'type': param['type'],
+              'name': param['name'],
+              'value': value,
+            });
+          }
+
+          // Add other parameters based on user's selection
+
+          textTheme.add({
+            'name': style,
+            'style': selectedTextStyle,
+            if (selectedParameters.isNotEmpty) 'parameters': selectedParameters,
+          });
+        }
+      }
+
+      context.vars = {
+        ...context.vars,
+        'textTheme': textTheme,
+        'useCustomTextTheme': true,
+      };
+      logger.info(
+        green.wrap('Text theme styles generated successfully!'),
+      );
+    } else {
+      context.vars = {
+        ...context.vars,
+        'useCustomTextTheme': false,
+      };
+      logger.info(
+        green.wrap('Using default text theme styles.'),
+      );
+    }
+  } else {
+    context.vars = {
+      ...context.vars,
+      'useCustomTextTheme': true,
+    };
+    logger.info(
+      green.wrap('Using default text theme styles from config.'),
+    );
+  }
+
   final directory = '${Directory.current.path}${Platform.pathSeparator}lib';
   List<String> folders;
 
