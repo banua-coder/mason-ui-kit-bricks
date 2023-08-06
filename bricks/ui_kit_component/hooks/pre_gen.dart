@@ -45,7 +45,7 @@ void run(HookContext context) async {
   }
 
   // Check if enums key is present in the vars. If not, prompt the user for input.
-  if (!context.vars.containsKey('enums')) {
+  if (!context.vars.containsKey('enums') && context.vars['hasEnum']) {
     final hasEnums = logger.confirm(
       'Does this component have any enum classes? (yes/no): ',
       defaultValue: false,
