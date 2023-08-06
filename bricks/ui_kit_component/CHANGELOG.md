@@ -12,3 +12,8 @@
 - Added a new `component-config.json` file that users can use to generate components using the UI Kit component brick with the command `mason make ui_kit_component -c component-config.json`. Users can customize the content of `component-config.json` according to their needs.
 - Implemented a post-generation process to fix code violations using `dart fix --apply`.
 - Added a final congratulatory message when the component is generated successfully.
+
+# 0.3.0+3
+
+- Added a prompt for users to select whether they want to use a custom text theme or the default text theme from the selected font family.
+- Added darkTextTheme.
