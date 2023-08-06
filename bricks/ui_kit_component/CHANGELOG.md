@@ -15,5 +15,4 @@
 
 # 0.3.0+3
 
-- Added a prompt for users to select whether they want to use a custom text theme or the default text theme from the selected font family.
-- Added darkTextTheme.
+- Added a check for enum property in pre-gen hooks. If there are no enums and hasEnum is set to true, prompt the user for the enums value.
