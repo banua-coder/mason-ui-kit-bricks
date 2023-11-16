@@ -8,7 +8,7 @@ List<WidgetTestScenarioModel> {{name.camelCase()}}TestScenario = [
   WidgetTestScenarioModel(
     title: '{{name.titleCase()}} Test',
     widget: {{prefix.upperCase()}}ComponentInitTest(
-      child:  //TODO: add your first test case for this widget,
+      child:  Container(), //TODO: add your first test case for this widget,
     ),
   ),
 ];
