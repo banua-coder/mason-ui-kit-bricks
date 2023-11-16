@@ -6,21 +6,79 @@ void run(HookContext context) async {
   var appName = context.vars['name'] as String;
   var organization = context.vars['organization'] as String;
   var failCount = 0;
+  var isUsingFvm = false;
+  String puroEnv =
+      context.vars.containsKey('puroEnv') ? context.vars['puroEnv'] : '';
+  Progress? checkPuroProgress;
+  Progress? checkFvmProgress;
 
   try {
+    // Check if puro is available
+    checkPuroProgress =
+        logger.progress('Check if puro installed on the device...');
+    var checkPuroResult = await Process.run('puro', []);
+
+    if (checkPuroResult.exitCode == 0 && puroEnv.isNotEmpty) {
+      checkPuroProgress.complete('Puro detected on the device!');
+      logger.info(blue.wrap('Using puro as Flutter Version Manager!'));
+      var setupPuroEnv = logger.progress('Setting up puro env...');
+      var setEnvResult = await Process.run('puro', ['use', '-g', puroEnv]);
+      setupPuroEnv.complete('Puro env setup successfully!');
+      logger.info(blue.wrap(setEnvResult.stdout));
+    } else {
+      // Check if fvm is available
+      checkPuroProgress.fail(
+        'Puro is not installed/configured inside the repo!',
+      );
+      checkFvmProgress =
+          logger.progress('Check if fvm installed on the device...');
+      var checkFvmResult = await Process.run('fvm', []);
+
+      if (checkFvmResult.exitCode == 0) {
+        isUsingFvm = true;
+        logger.info(
+          blue.wrap(
+            'Using fvm as Flutter Version Manager!',
+          ),
+        );
+      } else {
+        logger.info(
+          blue.wrap(
+            'No Flutter version manager detected. Using default Flutter command.',
+          ),
+        );
+      }
+    }
+  } catch (e) {
+    if (checkFvmProgress != null) {
+      checkFvmProgress.fail(
+        'No Flutter version manager detected. Using default Flutter command.',
+      );
+    } else {
+      logger.err(
+        'No Flutter version manager detected. Using default Flutter command.',
+      );
+    }
+  }
+
+  try {
+    var versionManager = isUsingFvm ? 'fvm' : 'flutter';
+    final updateCommand = {
+      'fvm': ['flutter', 'pub', 'upgrade'],
+      'flutter': ['pub', 'upgrade']
+    }[versionManager];
+
     final flutterGetProgress = logger.progress('Installing packages');
     var result = await Process.run(
-      'flutter',
-      [
-        'pub',
-        'upgrade',
-      ],
+      versionManager,
+      updateCommand!,
     );
 
     if (result.exitCode == 0) {
       flutterGetProgress.complete('Flutter packages installed!');
     } else {
       flutterGetProgress.fail('Failed to install Flutter packages!');
+      logger.err(result.stderr);
       failCount++;
     }
 
@@ -44,6 +102,7 @@ void run(HookContext context) async {
         activateRenameProgress.complete('Package rename activated!');
       } else {
         activateRenameProgress.fail('Failed to activate rename package!');
+        logger.err(result.stderr);
         failCount++;
       }
     }
@@ -52,9 +111,9 @@ void run(HookContext context) async {
     result = await Process.run(
       'rename',
       [
-        'setAppName'
-        '--value=${appName.titleCase}',
         '--targets=ios,android',
+        'setAppName',
+        '--value=${appName.titleCase}',
       ],
     );
 
@@ -62,6 +121,7 @@ void run(HookContext context) async {
       changeAppNameProgress.complete('App name updated!');
     } else {
       changeAppNameProgress.fail('App name not updated!');
+      logger.err(result.stderr);
       failCount++;
     }
 
@@ -90,6 +150,7 @@ void run(HookContext context) async {
         copyingEnvExampleProgress.fail(
           'Failed to create .env file. Make sure you have .env or .env.example in the root directory before continuing the process!',
         );
+        logger.err(result.stderr);
         failCount++;
       } else {
         copyingEnvExampleProgress.complete('.env generated!');
@@ -110,6 +171,7 @@ void run(HookContext context) async {
       changeAppPackageProgress.complete('Bundle id and package name updated!');
     } else {
       changeAppPackageProgress.fail('Bundle id and package name not updated!');
+      logger.err(result.stderr);
       failCount++;
     }
 
@@ -120,6 +182,7 @@ void run(HookContext context) async {
       runBuildRunnerProgress.complete('Build runner executed successfully!');
     } else {
       runBuildRunnerProgress.fail('Build runner failed!');
+      logger.err(result.stderr);
       failCount++;
     }
 
@@ -138,6 +201,25 @@ void run(HookContext context) async {
           .complete('Launcher icons successfully generated!');
     } else {
       runLauncherIconsProgress.fail('Launcher icons not generated!');
+      logger.err(result.stderr);
+      failCount++;
+    }
+
+    final formatProgress = logger.progress('Clearing all format violations');
+
+    final formatResult = await Process.run(
+      'dart',
+      [
+        'format',
+        'lib',
+      ],
+    );
+
+    if (formatResult.exitCode == 0) {
+      formatProgress.complete(formatResult.stdout);
+    } else {
+      formatProgress.fail(formatResult.stderr);
+      logger.err(result.stderr);
       failCount++;
     }
 
@@ -152,6 +234,7 @@ void run(HookContext context) async {
       fixSyntaxProgress.complete('All syntax violations have been fixed!');
     } else {
       fixSyntaxProgress.fail('All syntax violations could not be fixed!');
+      logger.err(result.stderr);
       failCount++;
     }
 
@@ -169,6 +252,7 @@ void run(HookContext context) async {
       removeUnusedFileProgress.complete('All unused files have been removed!');
     } else {
       removeUnusedFileProgress.fail('All unused files have not been removed!');
+      logger.err(result.stderr);
       failCount++;
     }
 

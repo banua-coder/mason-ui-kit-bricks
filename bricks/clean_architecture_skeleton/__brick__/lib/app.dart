@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:{{name.snakeCase()}}_ui_kit/{{name.snakeCase()}}_ui_kit.dart';
+{{#usingUiKit}}import 'package:{{name.snakeCase()}}_ui_kit/{{name.snakeCase()}}_ui_kit.dart';{{/usingUiKit}}
 
 import 'base/lifecycle_manager.dart';
 import 'core/di/service_locator.dart';
@@ -14,6 +14,7 @@ class {{name.pascalCase()}}App extends StatelessWidget {
 
   final router = getIt<{{prefix.upperCase()}}Router>();
 
+  {{#usingUiKit}}
   @override
   Widget build(BuildContext context) => {{prefix.upperCase()}}ComponentInit(
       builder: (context) => MaterialApp.router(
@@ -62,4 +63,45 @@ class {{name.pascalCase()}}App extends StatelessWidget {
                     ),
             ),
           ));
+      {{/usingUiKit}}
+
+      {{^usingUiKit}}
+      @override
+      Widget build(BuildContext context) => MaterialApp.router(
+            title: '{{name.titleCase()}}',
+            routerDelegate: AutoRouterDelegate(
+              router,
+              navigatorObservers: () => [
+                {{prefix.upperCase()}}RouteObserver(),
+              ],
+            ),
+            routeInformationParser: router.defaultRouteParser(),
+            locale: const Locale('id', 'ID'),
+            debugShowCheckedModeBanner: false,
+            builder: EasyLoading.init(
+              builder: (context, child) => child == null
+                  ? nil
+                  : LifecycleManager(
+                      child: child,
+                      lifeCycle: (state) {
+                        var logger = getIt<Log>();
+                        switch (state) {
+                          case AppLifecycleState.resumed:
+                            logger.console('App is resumed.');
+                            break;
+                          case AppLifecycleState.inactive:
+                            logger.console('App is inactive.');
+                            break;
+                          case AppLifecycleState.paused:
+                            logger.console('App is paused.');
+                            break;
+                          case AppLifecycleState.detached:
+                            logger.console('App is detached.');
+                            break;
+                        }
+                      },
+                    ),
+            ),
+          );
+      {{/usingUiKit}}
 }

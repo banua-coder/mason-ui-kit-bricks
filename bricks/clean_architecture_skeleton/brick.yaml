@@ -51,3 +51,8 @@ vars:
     description: Check if the app is using location or not
     default: true
     prompt: Is your app using location?
+  usingUiKit:
+    type: boolean
+    default: true
+    description: Check if the app has UI kit or not
+    prompt: Does your app has a ui kit package?

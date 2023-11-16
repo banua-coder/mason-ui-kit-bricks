@@ -5,76 +5,78 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
+  sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
-  auto_route: ^7.7.0
+  auto_route: ^7.8.4
   bloc: ^8.1.2
-  connectivity_plus: ^4.0.1
-  cupertino_icons: ^1.0.5
+  connectivity_plus: ^5.0.1
+  cupertino_icons: ^1.0.6
   dartz: ^0.10.1
-  device_info_plus: ^9.0.2
-  dio: ^5.2.1+1
-  dio_cache_interceptor: ^3.4.2
-  dio_smart_retry: ^5.0.0
-  envied: ^0.3.0+3
+  device_info_plus: ^9.1.0
+  dio: ^5.3.3
+  dio_cache_interceptor: ^3.4.4
+  dio_smart_retry: ^6.0.0
+  envied: ^0.5.1
   equatable: ^2.0.5
   external_path: ^1.0.3
   {{#usingFirebase}}
-  firebase_analytics: ^10.4.4
-  firebase_core: ^2.15.0
-  firebase_crashlytics: ^3.3.4
+  firebase_analytics: ^10.7.0
+  firebase_core: ^2.22.0
+  firebase_crashlytics: ^3.4.4
   {{/usingFirebase}}
+  flutter:
+    sdk: flutter
   flutter_bloc: ^8.1.3
   flutter_easyloading: ^3.0.5
-  flutter_secure_storage: ^8.0.0
+  flutter_secure_storage: ^9.0.0
   flutter_spinkit: ^5.2.0
   flutter_vibrate: ^1.3.0
   freezed_annotation: ^2.4.1
-  geocoding: ^2.1.0
-  geolocator: ^9.0.2
-  get_it: ^7.6.0
-  infinite_scroll_pagination: ^3.2.0
-  injectable: ^2.1.2
-  intl: ^0.18.0
+  geocoding: ^2.1.1
+  geolocator: ^10.1.0
+  get_it: ^7.6.4
+  infinite_scroll_pagination: ^4.0.0
+  injectable: ^2.3.2
+  intl: ^0.18.1
   json_annotation: ^4.8.1
-  keyboard_attachable: ^2.1.0
-  logger: ^1.4.0
-  package_info_plus: ^4.0.2
-  path_provider: ^2.0.15
-  permission_handler: ^10.4.3
+  keyboard_attachable: ^2.2.0
+  logger: ^2.0.2+1
+  package_info_plus: ^4.2.0
+  path_provider: ^2.1.1
+  permission_handler: ^11.0.1
   pull_to_refresh: ^2.0.0
   rate_limiter: ^1.0.0
   readmore: ^2.2.0
   recase: ^4.1.0
-  share_plus: ^7.0.2
-
+  share_plus: ^7.2.1
+{{#usingUiKit}}
   {{name.snakeCase()}}_ui_kit:
     git:
       url: https://github.com/{{organization.paramCase()}}/{{name.paramCase()}}-ui-kit.git
-  slang_flutter: ^3.20.0
+      ref: main
+{{/usingUiKit}}
+  slang_flutter: ^3.25.0
   uni_links: ^0.5.1
-  url_launcher: ^6.1.12
+  url_launcher: ^6.2.1
 
 dev_dependencies:
-  auto_route_generator: ^7.1.1
-  bloc_test: ^9.1.3
-  build_runner: ^2.4.4
+  auto_route_generator: ^7.3.2
+  bloc_test: ^9.1.5
+  build_runner: ^2.4.6
   change_app_package_name: ^1.1.0
-  envied_generator:
-    git:
-      url: https://github.com/ryanaidilp/envied.git
-      path: packages/envied_generator
+  envied_generator: ^0.5.1
   flutter_flavorizr: ^2.2.1
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  freezed: ^2.3.4
-  injectable_generator: ^2.1.6
+  freezed: ^2.4.5
+  injectable_generator: ^2.4.1
   json_serializable: ^6.7.1
-  mocktail: ^0.3.0
-  slang_build_runner: ^3.20.0
+  mocktail: ^1.0.1
+  slang_build_runner: ^3.25.0
+  very_good_analysis: ^5.1.0
 
 flutter:
   uses-material-design: true
