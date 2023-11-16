@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:{{packageName}}/{{packageName}}.dart';
 
-import '../../../{{packageName}}.dart';
 
 class {{prefix.upperCase()}}ComponentInit extends StatelessWidget {
-  const {{prefix.upperCase()}}ComponentInit({super.key, required this.builder});
+  const {{prefix.upperCase()}}ComponentInit({super.key, required this.builder, required this.designSize,});
 
   final Widget Function(BuildContext context) builder;
+  final Size? designSize;
 
   @override
   Widget build(BuildContext context) => MediaQuery(
@@ -17,8 +18,8 @@ class {{prefix.upperCase()}}ComponentInit extends StatelessWidget {
           ScreenUtil.init(
             _, 
             designSize: Size(
-              constraints.maxWidth,
-              constraints.maxHeight,
+             designSize?.width ?? constraints.maxWidth,
+             designSize?.height ?? constraints.maxHeight,
             ),
           );
 
