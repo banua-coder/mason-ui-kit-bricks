@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../{{packageName}}.dart';
+import 'package:{{packageName}}/{{packageName}}.dart';
 
 {{#isStateful}}  
 class {{prefix.upperCase()}}{{name.pascalCase()}} extends StatefulWidget {
   const {{prefix.upperCase()}}{{name.pascalCase()}}({
     super.key,
-    {{#properties}}{{#isRequired}}required{{/isRequired}} this.{{name.camelCase()}} {{#default}}= {{default}}{{/default}},
+    {{#properties}}{{#isRequired}}required{{/isRequired}} this.{{name.camelCase()}} {{#default}}= {{{default}}}{{/default}},
     {{/properties}}
   });
   
   {{#properties}}
-  final {{type}} {{name.camelCase()}};
+  final {{{type}}} {{name.camelCase()}};
   {{/properties}}
 
   @override
@@ -28,12 +28,12 @@ class _{{prefix.upperCase()}}{{name.pascalCase()}}State extends State<{{prefix.u
 class {{prefix.upperCase()}}{{name.pascalCase()}} extends StatelessWidget {
    const {{prefix.upperCase()}}{{name.pascalCase()}}({
     super.key,
-    {{#properties}}{{#isRequired}}required {{/isRequired}}this.{{name.camelCase()}} {{#default}}= {{default}}{{/default}},
+    {{#properties}}{{#isRequired}}required {{/isRequired}}this.{{name.camelCase()}} {{#default}}= {{{default}}}{{/default}},
     {{/properties}}
   });
   
   {{#properties}}
-  final {{type}} {{name.camelCase()}};
+  final {{{type}}} {{name.camelCase()}};
   {{/properties}}
 
   @override
