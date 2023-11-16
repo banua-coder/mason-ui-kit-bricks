@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:mason/mason.dart';
@@ -334,6 +335,20 @@ void run(HookContext context) async {
     folders = directory.split(Platform.pathSeparator).toList();
 
     final libIndex = folders.indexWhere((folder) => folder == 'lib');
+
+    final puroFile = File(
+      '${folders.sublist(0, libIndex).join(Platform.pathSeparator)}/.puro.json',
+    );
+
+    if (puroFile.existsSync()) {
+      var puroContent = await puroFile.readAsString();
+      var puroJson = jsonDecode(puroContent);
+      var puroEnv = puroJson['env'];
+      context.vars = {
+        ...context.vars,
+        'puroEnv': puroEnv,
+      };
+    }
 
     final pubSpecFile =
         File('${folders.sublist(0, libIndex).join('/')}/pubspec.yaml');
