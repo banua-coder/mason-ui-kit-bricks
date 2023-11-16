@@ -52,8 +52,9 @@ void run(HookContext context) async {
     result = await Process.run(
       'rename',
       [
-        '--appname=${appName.titleCase}',
-        '--target=ios,android',
+        'setAppName'
+        '--value=${appName.titleCase}',
+        '--targets=ios,android',
       ],
     );
 
