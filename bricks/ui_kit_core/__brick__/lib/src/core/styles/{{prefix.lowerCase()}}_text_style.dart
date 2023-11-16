@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-import '../../../{{packageName}}.dart';
+import 'package:{{packageName}}/{{packageName}}.dart';
 
 class {{prefix.upperCase()}}TextStyle {
   const {{prefix.upperCase()}}TextStyle._();

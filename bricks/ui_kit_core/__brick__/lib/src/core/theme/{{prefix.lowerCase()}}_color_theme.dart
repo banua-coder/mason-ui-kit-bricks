@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../{{packageName}}.dart';
+import 'package:{{packageName}}/{{packageName}}.dart';
 
 class {{prefix.upperCase()}}ColorTheme extends ThemeExtension<{{prefix.upperCase()}}ColorTheme> {
 

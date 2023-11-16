@@ -5,14 +5,13 @@ export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:nil/nil.dart';
 
 // components
+export 'src/components/components.dart';
 
 // styles
-export 'src/core/styles/{{prefix.lowerCase()}}_colors.dart';
-export 'src/core/styles/{{prefix.lowerCase()}}_text_style.dart';
+export 'src/core/styles/styles.dart';
 
 // themes
-export 'src/core/theme/{{prefix.lowerCase()}}_color_theme.dart';
-export 'src/core/theme/{{prefix.lowerCase()}}_theme.dart';
+export 'src/core/theme/themes.dart';
 
 // utils
-export 'src/core/utils/component_init.dart';
+export 'src/core/utils/utils.dart';
