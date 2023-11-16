@@ -1,6 +1,13 @@
-# 0.1.0+1
+# 0.4.0
 
-- Initial release of ui_kit_component brick.
+- Added support for flutter 3.13.
+- Update some packages.
+- Add check for `flutter version management` for running flutter/dart related commmands in the hooks.
+- Fix some bugs and minor errors after generating code.
+
+# 0.3.0+3
+
+- Added a check for enum property in pre-gen hooks. If there are no enums and hasEnum is set to true, prompt the user for the enums value.
 
 # 0.2.0+2
 
@@ -13,6 +20,6 @@
 - Implemented a post-generation process to fix code violations using `dart fix --apply`.
 - Added a final congratulatory message when the component is generated successfully.
 
-# 0.3.0+3
+# 0.1.0+1
 
-- Added a check for enum property in pre-gen hooks. If there are no enums and hasEnum is set to true, prompt the user for the enums value.
+- Initial release of ui_kit_component brick.
