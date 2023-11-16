@@ -8,7 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  extended_image: ^8.2.0
+  extended_image: ^8.1.1
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.0
